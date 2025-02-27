@@ -12,14 +12,14 @@
     <!-- 오류 메시지 표시 -->
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-    <!-- 회원가입 / 아이디 찾기 / 비밀번호 찾기 링크 -->
+    <!-- 회원가입 / 아이디 찾기 / 비밀번호 찾기 버튼 -->
     <div class="links">
       <p>계정이 없으신가요? <router-link to="/register">회원가입</router-link></p>
       <p><a href="#" @click="showFindID = true">아이디 찾기</a></p>
       <p><a href="#" @click="showFindPassword = true">비밀번호 찾기</a></p>
     </div>
 
-    <!-- 🔥 아이디 찾기 모달 -->
+    <!-- 🔥 아이디 찾기 팝업 -->
     <div v-if="showFindID" class="modal">
       <div class="modal-content">
         <h3>아이디 찾기</h3>
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <!-- 🔥 비밀번호 찾기 모달 -->
+    <!-- 🔥 비밀번호 찾기 팝업 -->
     <div v-if="showFindPassword" class="modal">
       <div class="modal-content">
         <h3>비밀번호 찾기</h3>
@@ -53,16 +53,16 @@ export default {
       password: "",
       errorMessage: "",
 
-      // 🔥 아이디/비밀번호 찾기 팝업 관리
+      // 🔥 팝업 상태 관리
       showFindID: false,
       showFindPassword: false,
 
-      // 🔥 아이디 찾기 입력 데이터
+      // 🔥 아이디 찾기 입력값
       findIDName: "",
       findIDPhone: "",
       foundEmail: "",
 
-      // 🔥 비밀번호 찾기 입력 데이터
+      // 🔥 비밀번호 찾기 입력값
       findPWEmail: "",
       findPWName: "",
       foundPassword: "",
@@ -96,7 +96,7 @@ export default {
       }
     },
 
-    // 🔥 아이디 찾기 기능
+    // ✅ 아이디 찾기 API 요청
     async findID() {
       try {
         const response = await fetch("http://localhost:5000/find-id", {
@@ -105,42 +105,69 @@ export default {
           body: JSON.stringify({ name: this.findIDName, phone: this.findIDPhone }),
         });
 
-        const data = await response.json();
-        if (response.ok) {
-          this.foundEmail = data.email;
-        } else {
-          alert(data.error);
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`서버 오류: ${errorText}`);
         }
+
+        const data = await response.json();
+        this.foundEmail = data.email;
       } catch (error) {
         console.error("아이디 찾기 오류:", error);
+        alert(error.message);
       }
     },
 
-    // 🔥 비밀번호 찾기 기능
+    // ✅ 비밀번호 찾기 API 요청
     async findPassword() {
       try {
         const response = await fetch("http://localhost:5000/find-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: this.findPWEmail,
-            name: this.findPWName,
-          }),
+          body: JSON.stringify({ email: this.findPWEmail, name: this.findPWName }),
         });
 
-        const data = await response.json();
-        if (response.ok) {
-          this.foundPassword = data.password;
-        } else {
-          alert(data.error);
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "비밀번호 찾기 실패");
         }
+
+        const data = await response.json();
+        this.foundPassword = data.password;
       } catch (error) {
         console.error("비밀번호 찾기 오류:", error);
+        alert(error.message);
       }
     },
   },
 };
 </script>
+
+<style scoped>
+/* 🔥 모달 스타일 */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal button {
+  margin-top: 10px;
+}
+</style>
+
 
 
 <style scoped>
