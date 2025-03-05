@@ -27,7 +27,7 @@ export default {
   },
   async created() {
     try {
-      const response = await fetch("http://localhost:5000/profile", { credentials: "include" });
+      const response = await fetch("http://201.101.236.158:5000/profile", { credentials: "include" });
       if (response.ok) {
         this.user = await response.json();
       } else {
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     logout() {
-      fetch("http://localhost:5000/logout", { method: "POST", credentials: "include" })
+      fetch("http://201.101.236.158:5000/logout", { method: "POST", credentials: "include" })
         .then(() => {
           this.user = null;
           this.$router.push("/");
@@ -48,7 +48,7 @@ export default {
     },
     deleteAccount() {
       if (confirm("정말 탈퇴하시겠습니까?")) {
-        fetch("http://localhost:5000/delete-account", { method: "DELETE", credentials: "include" })
+        fetch("http://201.101.236.158:5000/delete-account", { method: "DELETE", credentials: "include" })
           .then(() => {
             this.user = null;
             this.$router.push("/");

@@ -15,7 +15,7 @@ export default {
   },
   methods: {
     async findID() {
-      const response = await fetch("http://localhost:5000/find-id", {
+      const response = await fetch("http://210.101.236.158:5000/find-id", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: this.name, phone: this.phone }),
