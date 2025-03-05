@@ -42,7 +42,7 @@
     methods: {
       async getProfile() {
         try {
-          const response = await fetch(`http://210.101.236.158:5000/profile/${this.userId}`);
+          const response = await fetch(`http://210.101.236.158:5001/profile/${this.userId}`);
           const data = await response.json();
           if (!response.ok) throw new Error(data.error || "회원정보 불러오기 실패");
   
@@ -59,7 +59,7 @@
   
       async updateProfile() {
         try {
-          const response = await fetch(`http://210.101.236.158:5000/profile/${this.userId}`, {
+          const response = await fetch(`http://210.101.236.158:5001/profile/${this.userId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

@@ -43,7 +43,7 @@ export default {
       try {
         console.log("📌 비밀번호 찾기 요청 전송:", this.email, this.name); // ✅ 요청 로그
 
-        const response = await fetch("http://210.101.236.158:5000/find-password", {
+        const response = await fetch("http://210.101.236.158:5001/find-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: this.email, name: this.name }),
