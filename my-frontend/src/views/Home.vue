@@ -135,14 +135,37 @@ export default {
       this.isEditing = true;
     },
     async saveChanges() {
-      try {
-        const userId = this.user.id;
-        await axios.put(`http://210.101.236.158:5001/profile/${userId}`, this.user);
-        alert("회원정보가 수정되었습니다!");
-        this.isEditing = false;
-      } catch (error) {
-        console.error("회원정보 수정 오류:", error);
-      }
+        this.userId = this.user.id; // ✅ userId를 this.user.id에서 가져오기
+        console.log("🧐 수정 요청할 유저 ID:", this.userId);
+
+        if (!this.userId) {
+            console.error("❌ 오류: userId가 정의되지 않음");
+            alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
+            return;
+        }
+
+        const requestData = {
+            name: this.user.name || "이름 없음",
+            email: this.user.email || "이메일 없음",
+            phone: this.user.phone || "전화번호 없음",
+            birthdate: this.user.birthdate ? this.user.birthdate.substring(0, 10) : null,
+            gender: this.user.gender || "기타",
+            height: this.user.height || 0,
+            photo: this.user.photo || "http://210.101.236.158:5001/uploads/default.jpg"
+        };
+
+        console.log("📌 보낼 데이터:", requestData);
+
+        try {
+            const response = await axios.put(`http://210.101.236.158:5001/profile/${this.userId}`, requestData);
+
+            if (response.status === 200) {
+                console.log("✅ 회원정보 수정 성공:", response.data);
+                this.isEditing = false; // ✅ 수정 완료 후 편집 모드 닫기
+            }
+        } catch (error) {
+            console.error("❌ 회원정보 수정 오류:", error);
+        }
     },
     cancelEditing() {
       this.isEditing = false;

@@ -70,30 +70,33 @@ export default {
   },
   methods: {
     async login() {
-      console.log("🔥 로그인 요청:", this.email, this.password);
-      try {
-        const response = await fetch("http://210.101.236.158:5001/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: this.email,
-            password: this.password,
-          }),
-        });
+        console.log("🔥 로그인 요청:", this.email, this.password);
+        try {
+            const response = await fetch("http://210.101.236.158:5001/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: this.email,
+                    password: this.password,
+                }),
+            });
 
-        const result = await response.json();
-        if (!response.ok) {
-          throw new Error(result.error || "로그인 실패");
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.error || "로그인 실패");
+            }
+
+            // ✅ 로그인한 유저 정보 저장
+            localStorage.setItem("token", result.token); // JWT 토큰 저장
+            localStorage.setItem("loggedInUser", JSON.stringify(result.user)); // 전체 유저 정보 저장
+            localStorage.setItem("userId", result.user.id); // ✅ userId 저장 (백엔드에서 전달한 id)
+
+            alert("로그인 성공!");
+            this.$router.push("/home"); // 홈으로 이동
+        } catch (error) {
+            this.errorMessage = error.message || "로그인 실패! 이메일과 비밀번호를 확인하세요.";
+            console.error("❌ 로그인 오류:", error);
         }
-
-        localStorage.setItem("token", result.token);
-        localStorage.setItem("loggedInUser", JSON.stringify(result.user));
-
-        alert("로그인 성공!");
-        this.$router.push("/home");
-      } catch (error) {
-        this.errorMessage = error.message || "로그인 실패! 이메일과 비밀번호를 확인하세요.";
-      }
     },
 
     // ✅ 아이디 찾기 API 요청
