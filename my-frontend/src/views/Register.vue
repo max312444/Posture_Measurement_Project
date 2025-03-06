@@ -51,29 +51,30 @@ export default {
   methods: {
     // 🔥 ✅ 사진 업로드 기능 추가
     async uploadPhoto(event) {
-  const file = event.target.files[0];
-  if (!file) return;
+        const file = event.target.files[0];
+        if (!file) return;
 
-  const formData = new FormData();
-  formData.append("photo", file);
+        const formData = new FormData();
+        formData.append("photo", file);
 
-  try {
-    const response = await fetch("http://210.101.236.158:5001/upload", {
-      method: "POST",
-      body: formData, // ✅ FormData 사용!
-    });
+        try {
+            const response = await fetch("http://210.101.236.158:5001/upload", {
+                method: "POST",
+                body: formData
+            });
 
-    if (!response.ok) throw new Error("사진 업로드 실패");
+            if (!response.ok) throw new Error("사진 업로드 실패");
 
-    const result = await response.json();
-    this.photo = result.url; // ✅ 서버에서 받은 이미지 URL 저장
-    this.photoPreview = result.url; // ✅ 미리보기 설정
-  } catch (error) {
-    console.error("❌ 사진 업로드 오류:", error); // ✅ 여기에서 에러 확인!
-    this.errorMessage = "사진 업로드 중 오류 발생!";
-  }
-}
-,
+            const result = await response.json();
+            console.log("업로드된 파일 URL:", result.filePath);
+
+            this.photo = result.filePath; // 백엔드에서 받은 URL 저장
+            this.photoPreview = result.filePath; // 미리보기 이미지 설정
+        } catch (error) {
+            console.error("❌ 사진 업로드 오류:", error);
+            this.errorMessage = "사진 업로드 중 오류 발생!";
+        }
+    },
 
     async register() {
       if (!this.name || !this.email || !this.password || !this.phone || !this.birthdate || !this.gender || !this.height) {
@@ -93,7 +94,7 @@ export default {
             birthdate: this.birthdate,
             gender: this.gender,
             height: parseInt(this.height),
-            photo: this.photo, // ✅ 서버에서 받은 사진 URL을 전송
+            photo: this.photoPreview, // ✅ 서버에서 받은 사진 URL을 전송
           }),
         });
 
