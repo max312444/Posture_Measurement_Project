@@ -43,7 +43,7 @@
 ## 🖼️ 스크린샷
 
 <p align="center">
-  <img src="./screenshot/posturecare-sample.png" alt="PostureCare Screenshot" width="400"/>
+  <img src="./web-page-image.png" alt="PostureCare Screenshot" width="400"/>
 </p>
 
 ---
