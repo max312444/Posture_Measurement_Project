@@ -9,12 +9,12 @@
       {{ isLoading ? "처리 중..." : "비밀번호 찾기" }}
     </button>
     
-    <!-- ✅ 오류 메시지 표시 -->
-    <p v-if="errorMessage" class="error-message">❌ {{ errorMessage }}</p>
+    <!-- 오류 메시지 표시 -->
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-    <!-- ✅ 임시 비밀번호 표시 -->
+    <!-- 임시 비밀번호 표시 -->
     <div v-if="tempPassword" class="password-box">
-      <p>🔑 임시 비밀번호:</p>
+      <p>임시 비밀번호:</p>
       <strong class="password">{{ tempPassword }}</strong>
       <p class="info-text">로그인 후 반드시 변경하세요.</p>
     </div>
@@ -29,19 +29,19 @@ export default {
     return { 
       email: "", 
       name: "", 
-      tempPassword: "",  // ✅ 서버에서 받은 임시 비밀번호 저장
-      errorMessage: "",  // ✅ 오류 메시지 저장
-      isLoading: false   // ✅ 요청 진행 중 상태
+      tempPassword: "",  // 서버에서 받은 임시 비밀번호 저장
+      errorMessage: "",  // 오류 메시지 저장
+      isLoading: false   // 요청 진행 중 상태
     };
   },
   methods: {
     async findPassword() {
       this.errorMessage = "";
       this.tempPassword = "";
-      this.isLoading = true; // ✅ 요청 시작
+      this.isLoading = true; // 요청 시작
 
       try {
-        console.log("📌 비밀번호 찾기 요청 전송:", this.email, this.name); // ✅ 요청 로그
+        console.log("비밀번호 찾기 요청 전송:", this.email, this.name); // 요청 로그
 
         const response = await fetch("http://210.101.236.158:5001/find-password", {
           method: "POST",
@@ -49,21 +49,21 @@ export default {
           body: JSON.stringify({ email: this.email, name: this.name }),
         });
 
-        console.log("📌 응답 상태 코드:", response.status); // ✅ 응답 코드 확인
+        console.log("응답 상태 코드:", response.status); // 응답 코드 확인
         const data = await response.json();
-        console.log("📌 서버 응답 데이터:", data); // ✅ 서버 응답 확인
+        console.log("서버 응답 데이터:", data); // 서버 응답 확인
 
         if (!response.ok || !data.tempPassword) throw new Error(data.error || "비밀번호 찾기 실패");
 
-        // ✅ 서버에서 받은 임시 비밀번호 저장
+        // 서버에서 받은 임시 비밀번호 저장
         this.tempPassword = data.tempPassword;
-        console.log("✅ 화면에 표시할 임시 비밀번호:", this.tempPassword);
+        console.log("화면에 표시할 임시 비밀번호:", this.tempPassword);
 
       } catch (error) {
-        console.error("❌ 비밀번호 찾기 오류:", error);
+        console.error("비밀번호 찾기 오류:", error);
         this.errorMessage = error.message || "비밀번호 찾기 중 오류 발생!";
       } finally {
-        this.isLoading = false; // ✅ 요청 종료
+        this.isLoading = false; // 요청 종료
       }
     },
     close() {

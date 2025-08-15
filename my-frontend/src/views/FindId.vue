@@ -4,7 +4,7 @@
     <input v-model="name" placeholder="이름 입력" />
     <input v-model="phone" placeholder="전화번호 입력" />
     <button @click="findID">아이디 찾기</button>
-    <p v-if="foundEmail">📧 찾은 이메일: {{ foundEmail }}</p>
+    <p v-if="foundEmail">찾은 이메일: {{ foundEmail }}</p>
   </div>
 </template>
 

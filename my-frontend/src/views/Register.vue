@@ -15,7 +15,7 @@
       </select>
       <input type="number" v-model="height" placeholder="키(cm)" required />
 
-      <!-- 🔥 사진 업로드 -->
+      <!-- 사진 업로드 -->
       <div class="photo-upload">
         <label>프로필 사진 업로드</label>
         <input type="file" accept="image/*" @change="uploadPhoto" />
@@ -43,13 +43,13 @@ export default {
       birthdate: "",
       gender: "",
       height: "",
-      photo: "", // ✅ 서버에서 받은 이미지 URL 저장
-      photoPreview: "", // ✅ 사진 미리보기
+      photo: "", // 서버에서 받은 이미지 URL 저장
+      photoPreview: "", // 사진 미리보기
       errorMessage: "",
     };
   },
   methods: {
-    // 🔥 ✅ 사진 업로드 기능 추가
+    // 사진 업로드 기능 추가
     async uploadPhoto(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -71,7 +71,7 @@ export default {
             this.photo = result.filePath; // 백엔드에서 받은 URL 저장
             this.photoPreview = result.filePath; // 미리보기 이미지 설정
         } catch (error) {
-            console.error("❌ 사진 업로드 오류:", error);
+            console.error("사진 업로드 오류:", error);
             this.errorMessage = "사진 업로드 중 오류 발생!";
         }
     },
@@ -94,7 +94,7 @@ export default {
             birthdate: this.birthdate,
             gender: this.gender,
             height: parseInt(this.height),
-            photo: this.photoPreview, // ✅ 서버에서 받은 사진 URL을 전송
+            photo: this.photoPreview, // 서버에서 받은 사진 URL을 전송
           }),
         });
 
@@ -104,7 +104,7 @@ export default {
         alert("회원가입 성공!");
         this.$router.push("/");
       } catch (error) {
-        console.error("❌ 회원가입 오류:", error);
+        console.error("회원가입 오류:", error);
         this.errorMessage = "회원가입 중 오류 발생!";
       }
     },
@@ -188,8 +188,8 @@ button:hover {
 }
 
 .photo-preview {
-  width: 100px;  /* ✅ 미리보기 크기 */
-  height: 100px; /* ✅ 미리보기 크기 */
+  width: 100px;  /* 미리보기 크기 */
+  height: 100px; /* 미리보기 크기 */
   object-fit: cover;
   border-radius: 10px;
   margin-top: 10px;

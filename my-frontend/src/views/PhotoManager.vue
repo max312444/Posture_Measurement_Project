@@ -2,7 +2,7 @@
   <div class="photo-manager">
     <!-- 사진 추가 버튼 -->
     <input type="file" @change="uploadPhoto" ref="fileInput" accept="image/*" hidden />
-    <button @click="triggerFileInput" class="upload-btn">📸 사진 추가</button>
+    <button @click="triggerFileInput" class="upload-btn">사진 추가</button>
 
     <!-- 사진 목록 -->
     <div class="photo-list">
@@ -14,7 +14,7 @@
         @click="selectPhoto(photo)"
       >
         <img :src="photo.url" />
-        <button @click.stop="deletePhoto(photo.id)" class="delete-btn">❌</button>
+        <button @click.stop="deletePhoto(photo.id)" class="delete-btn"></button>
       </div>
     </div>
 

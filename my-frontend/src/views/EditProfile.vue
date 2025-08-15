@@ -26,7 +26,7 @@
 export default {
   data() {
     return {
-      userId: 1, // ✅ 현재 로그인한 사용자의 ID (테스트용)
+      userId: 1, // 현재 로그인한 사용자의 ID (테스트용)
       name: "",
       phone: "",
       birthdate: "",
@@ -52,7 +52,7 @@ export default {
         this.gender = data.gender;
         this.height = data.height;
       } catch (error) {
-        console.error("❌ 회원정보 불러오기 오류:", error);
+        console.error("회원정보 불러오기 오류:", error);
         this.errorMessage = "회원정보를 불러오는 중 오류 발생!";
       }
     },
@@ -74,9 +74,9 @@ export default {
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || "회원정보 수정 실패");
 
-        this.successMessage = "✅ 회원정보가 성공적으로 수정되었습니다!";
+        this.successMessage = "회원정보가 성공적으로 수정되었습니다!";
       } catch (error) {
-        console.error("❌ 회원정보 수정 오류:", error);
+        console.error("회원정보 수정 오류:", error);
         this.errorMessage = "회원정보 수정 중 오류 발생!";
       }
     },

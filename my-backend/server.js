@@ -67,7 +67,7 @@ app.post("/register", async (req, res) => {
 
         // DB에 저장 (MySQL 예제)
         const sql = "INSERT INTO users (name, email, password, phone, birthdate, gender, height, photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        const values = [name, email, hashedPassword, phone, birthdate, gender, height, photo]; // ✅ 프로필 사진 추가
+        const values = [name, email, hashedPassword, phone, birthdate, gender, height, photo]; // 프로필 사진 추가
 
         db.query(sql, values, (err, result) => {
             if (err) {

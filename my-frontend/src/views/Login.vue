@@ -19,26 +19,26 @@
       <p><a href="#" @click="showFindPassword = true">비밀번호 찾기</a></p>
     </div>
 
-    <!-- 🔥 아이디 찾기 팝업 -->
+    <!-- 아이디 찾기 팝업 -->
     <div v-if="showFindID" class="modal">
       <div class="modal-content">
         <h3>아이디 찾기</h3>
         <input v-model="findIDName" placeholder="이름 입력" />
         <input v-model="findIDPhone" placeholder="전화번호 입력" />
         <button @click="findID">찾기</button>
-        <p v-if="foundEmail">📧 찾은 아이디: {{ foundEmail }}</p>
+        <p v-if="foundEmail">찾은 아이디: {{ foundEmail }}</p>
         <button @click="showFindID = false">닫기</button>
       </div>
     </div>
 
-    <!-- 🔥 비밀번호 찾기 팝업 -->
+    <!-- 비밀번호 찾기 팝업 -->
     <div v-if="showFindPassword" class="modal">
       <div class="modal-content">
         <h3>비밀번호 찾기</h3>
         <input v-model="findPWEmail" placeholder="이메일 입력" />
         <input v-model="findPWName" placeholder="이름 입력" />
         <button @click="findPassword">찾기</button>
-        <p v-if="foundPassword">🔑 찾은 비밀번호: {{ foundPassword }}</p>
+        <p v-if="foundPassword">찾은 비밀번호: {{ foundPassword }}</p>
         <button @click="showFindPassword = false">닫기</button>
       </div>
     </div>
@@ -53,16 +53,16 @@ export default {
       password: "",
       errorMessage: "",
 
-      // 🔥 팝업 상태 관리
+      // 팝업 상태 관리
       showFindID: false,
       showFindPassword: false,
 
-      // 🔥 아이디 찾기 입력값
+      // 아이디 찾기 입력값
       findIDName: "",
       findIDPhone: "",
       foundEmail: "",
 
-      // 🔥 비밀번호 찾기 입력값
+      // 비밀번호 찾기 입력값
       findPWEmail: "",
       findPWName: "",
       foundPassword: "",
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     async login() {
-        console.log("🔥 로그인 요청:", this.email, this.password);
+        console.log("로그인 요청:", this.email, this.password);
         try {
             const response = await fetch("http://210.101.236.158:5001/login", {
                 method: "POST",
@@ -86,20 +86,20 @@ export default {
                 throw new Error(result.error || "로그인 실패");
             }
 
-            // ✅ 로그인한 유저 정보 저장
+            // 로그인한 유저 정보 저장
             localStorage.setItem("token", result.token); // JWT 토큰 저장
             localStorage.setItem("loggedInUser", JSON.stringify(result.user)); // 전체 유저 정보 저장
-            localStorage.setItem("userId", result.user.id); // ✅ userId 저장 (백엔드에서 전달한 id)
+            localStorage.setItem("userId", result.user.id); // userId 저장 (백엔드에서 전달한 id)
 
             alert("로그인 성공!");
             this.$router.push("/home"); // 홈으로 이동
         } catch (error) {
             this.errorMessage = error.message || "로그인 실패! 이메일과 비밀번호를 확인하세요.";
-            console.error("❌ 로그인 오류:", error);
+            console.error("로그인 오류:", error);
         }
     },
 
-    // ✅ 아이디 찾기 API 요청
+    // 아이디 찾기 API 요청
     async findID() {
       try {
         const response = await fetch("http://210.101.236.158:5001/find-id", {
@@ -121,7 +121,7 @@ export default {
       }
     },
 
-    // ✅ 비밀번호 찾기 API 요청
+    // 비밀번호 찾기 API 요청
     async findPassword() {
       try {
         const response = await fetch("http://210.101.236.158:5001/find-password", {
@@ -147,7 +147,7 @@ export default {
 </script>
 
 <style scoped>
-/* 🔥 모달 스타일 */
+/* 모달 스타일 */
 .modal {
   position: fixed;
   top: 50%;

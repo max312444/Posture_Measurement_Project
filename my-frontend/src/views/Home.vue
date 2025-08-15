@@ -65,7 +65,7 @@
     <div class="photo-box photo-list">
       <h3>사진 목록</h3>
       <input type="file" @change="uploadPhoto" ref="fileInput" accept="image/*" hidden />
-      <button @click="triggerFileInput" class="upload-btn">📸 사진 추가</button>
+      <button @click="triggerFileInput" class="upload-btn">사진 추가</button>
 
       <ul>
         <li v-for="photo in photoList" :key="photo.id">
@@ -114,7 +114,7 @@ export default {
           name: `사진 ${photo.id}`,
         }));
       } catch (error) {
-        console.error("🚨 사진 목록 불러오기 실패:", error);
+        console.error("사진 목록 불러오기 실패:", error);
       }
     },
     logout() {
@@ -135,11 +135,11 @@ export default {
       this.isEditing = true;
     },
     async saveChanges() {
-        this.userId = this.user.id; // ✅ userId를 this.user.id에서 가져오기
-        console.log("🧐 수정 요청할 유저 ID:", this.userId);
+        this.userId = this.user.id; // userId를 this.user.id에서 가져오기
+        console.log("수정 요청할 유저 ID:", this.userId);
 
         if (!this.userId) {
-            console.error("❌ 오류: userId가 정의되지 않음");
+            console.error("오류: userId가 정의되지 않음");
             alert("로그인 정보가 없습니다. 다시 로그인해주세요.");
             return;
         }
@@ -154,17 +154,17 @@ export default {
             photo: this.user.photo || "http://210.101.236.158:5001/uploads/default.jpg"
         };
 
-        console.log("📌 보낼 데이터:", requestData);
+        console.log("보낼 데이터:", requestData);
 
         try {
             const response = await axios.put(`http://210.101.236.158:5001/profile/${this.userId}`, requestData);
 
             if (response.status === 200) {
-                console.log("✅ 회원정보 수정 성공:", response.data);
-                this.isEditing = false; // ✅ 수정 완료 후 편집 모드 닫기
+                console.log("회원정보 수정 성공:", response.data);
+                this.isEditing = false; // 수정 완료 후 편집 모드 닫기
             }
         } catch (error) {
-            console.error("❌ 회원정보 수정 오류:", error);
+            console.error("회원정보 수정 오류:", error);
         }
     },
     cancelEditing() {
@@ -190,7 +190,7 @@ export default {
         });
         this.fetchPhotos();
       } catch (error) {
-        console.error("🚨 사진 업로드 실패:", error);
+        console.error("사진 업로드 실패:", error);
       }
     },
     async deletePhoto(photoId) {
