@@ -72,7 +72,7 @@ export default {
     async login() {
         console.log("로그인 요청:", this.email, this.password);
         try {
-            const response = await fetch("http://210.101.236.158:5001/login", {
+            const response = await fetch("http://localhost:5001/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -102,7 +102,7 @@ export default {
     // 아이디 찾기 API 요청
     async findID() {
       try {
-        const response = await fetch("http://210.101.236.158:5001/find-id", {
+        const response = await fetch("http://localhost:5001/find-id", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name: this.findIDName, phone: this.findIDPhone }),
@@ -124,7 +124,7 @@ export default {
     // 비밀번호 찾기 API 요청
     async findPassword() {
       try {
-        const response = await fetch("http://210.101.236.158:5001/find-password", {
+        const response = await fetch("http://localhost:5001/find-password", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: this.findPWEmail, name: this.findPWName }),

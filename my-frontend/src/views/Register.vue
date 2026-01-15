@@ -58,7 +58,7 @@ export default {
         formData.append("photo", file);
 
         try {
-            const response = await fetch("http://210.101.236.158:5001/upload", {
+            const response = await fetch("http://localhost:5001/upload", {
                 method: "POST",
                 body: formData
             });
@@ -83,7 +83,7 @@ export default {
       }
 
       try {
-        const response = await fetch("http://210.101.236.158:5001/register", {
+        const response = await fetch("http://localhost:5001/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

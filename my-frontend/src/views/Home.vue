@@ -92,7 +92,7 @@ export default {
   async created() {
     try {
       const userId = JSON.parse(localStorage.getItem("loggedInUser")).id;
-      const response = await axios.get(`http://210.101.236.158:5001/profile/${userId}`);
+      const response = await axios.get(`http://localhost:5001/profile/${userId}`);
       if (response.status === 200) {
         this.user = response.data;
         this.fetchPhotos();
@@ -107,10 +107,10 @@ export default {
   methods: {
     async fetchPhotos() {
       try {
-        const response = await axios.get(`http://210.101.236.158:5001/photos/user/${this.user.id}`);
+        const response = await axios.get(`http://localhost:5001/photos/user/${this.user.id}`);
         this.photoList = response.data.map(photo => ({
           id: photo.id,
-          url: `http://210.101.236.158:5001${photo.url}`,
+          url: `http://localhost:5001${photo.url}`,
           name: `사진 ${photo.id}`,
         }));
       } catch (error) {
@@ -125,7 +125,7 @@ export default {
     async deleteAccount() {
       if (confirm("정말 회원 탈퇴하시겠습니까?")) {
         const userId = this.user.id;
-        await axios.delete(`http://210.101.236.158:5001/profile/${userId}`);
+        await axios.delete(`http://localhost:5001/profile/${userId}`);
         localStorage.removeItem("loggedInUser");
         alert("회원 탈퇴 완료!");
         this.$router.push("/");
@@ -151,13 +151,13 @@ export default {
             birthdate: this.user.birthdate ? this.user.birthdate.substring(0, 10) : null,
             gender: this.user.gender || "기타",
             height: this.user.height || 0,
-            photo: this.user.photo || "http://210.101.236.158:5001/uploads/default.jpg"
+            photo: this.user.photo || "http://localhost:5001/uploads/default.jpg"
         };
 
         console.log("보낼 데이터:", requestData);
 
         try {
-            const response = await axios.put(`http://210.101.236.158:5001/profile/${this.userId}`, requestData);
+            const response = await axios.put(`http://localhost:5001/profile/${this.userId}`, requestData);
 
             if (response.status === 200) {
                 console.log("회원정보 수정 성공:", response.data);
@@ -185,7 +185,7 @@ export default {
       formData.append("user_id", this.user.id);
 
       try {
-        const response = await axios.post("http://210.101.236.158:5001/upload", formData, {
+        const response = await axios.post("http://localhost:5001/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
         this.fetchPhotos();
@@ -195,7 +195,7 @@ export default {
     },
     async deletePhoto(photoId) {
       try {
-        await axios.delete(`http://210.101.236.158:5001/photos/${photoId}`);
+        await axios.delete(`http://localhost:5001/photos/${photoId}`);
         this.fetchPhotos();
       } catch (error) {
         console.error("사진 삭제 실패:", error);

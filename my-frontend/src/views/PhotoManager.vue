@@ -38,10 +38,10 @@ export default {
 
     // 서버에서 사진 목록 가져오기
     const fetchPhotos = async () => {
-      const response = await axios.get("http://210.101.236.158:5001/photos");
+      const response = await axios.get("http://localhost:5001/photos");
       photos.value = response.data.map((photo) => ({
         id: photo.id,
-        url: `http://210.101.236.158:5001${photo.url}`,
+        url: `http://localhost:5001${photo.url}`,
       }));
     };
 
@@ -58,16 +58,16 @@ export default {
       const formData = new FormData();
       formData.append("photo", file);
 
-      const response = await axios.post("http://210.101.236.158:5001/upload-photo", formData);
+      const response = await axios.post("http://localhost:5001/upload-photo", formData);
       photos.value.unshift({
         id: response.data.id,
-        url: `http://210.101.236.158:5001${response.data.url}`,
+        url: `http://localhost:5001${response.data.url}`,
       });
     };
 
     // 사진 삭제
     const deletePhoto = async (photoId) => {
-      await axios.delete(`http://210.101.236.158:5001/photos/${photoId}`);
+      await axios.delete(`http://localhost:5001/photos/${photoId}`);
       photos.value = photos.value.filter((photo) => photo.id !== photoId);
       if (selectedPhoto.value?.id === photoId) {
         selectedPhoto.value = null;
